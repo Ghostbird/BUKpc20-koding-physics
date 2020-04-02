@@ -1,12 +1,27 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/ball.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends RigidBody2D
+
+export var elastic_strength = 10;
+
+func _physics_process(delta):
+	# If the user holds down the left mouse button
+	if (Input.is_mouse_button_pressed(BUTTON_LEFT)):
+		# Apply elastic band towards the current mouse position
+		self.applied_force = (get_global_mouse_position() - self.position) * elastic_strength;
+	else:
+		# Remove elastic band
+		self.applied_force = Vector2(0,0)
+"
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
 [node name="RigidBody2D" type="RigidBody2D"]
-mass = 10.0
+script = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )

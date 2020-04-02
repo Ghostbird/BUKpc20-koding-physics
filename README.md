@@ -80,3 +80,48 @@ When you now _Play Scene_ again, you should see your rigid bodies fall down onto
 ### Building time
 
 Drag objects into the 2D view and build something by stacking them. You should enable _smart snapping_ to allow the blocks to snap correctly to the half-way points in the grid. Pay attention that when have placed a block, you click the background to deselect it before you drag the next object in. Otherwise you might attach objects to each other, and that can give unexpected behaviour.
+
+## Practical physics
+
+If you place a ball in the air, and you can have it destroy you building as it falls down. You might notice that the ball is not doing much damage. This is because the ball is fairly light compared to the blocks. However, we can change the mass of this specific ball in the level. Click the ball, then in the _Inspector_ tab change the _Mass_ to `10`. Now when the ball falls down on your building, you can see that it shakes it quite a bit more.
+
+Mass is not the only physical property that we can edit in the Godot physics engine. Many more properties that you might recognise from physics at school are editable.
+
+Place the ball a distance away to the left of your building, a short distance above the ground. If you lack space, you can drag select the entire building and move it entirely to the right to free up some space.
+
+Now click the ball and in the _Inspector_ tab scroll down a little, you'll see the header _Angular_ which has a _velocity_ value. Change it to 1000 and hit _Play Scene_ to see what happens.
+
+If all went well, you've just created a heavy ball that is spinning at high speed, and will start slipping and rolling towards your building once it contacts the floor. You'll notice that it is slowed by to contact with the floor and the building blocks.
+
+It becomes even funnier when you look at the _Linear velocity_ and set its `x` to `1000`. This should turn your ball into a projectile that rams your building at high speed and rotation.
+
+Of course the ball is not the only thing with these properties. Every building block can have its values changed too. What happens when you change the _Gravity Scale_ on a foundation block of your building to `-10`?
+
+Other interesting properties are the linear and angular _Damp_ which stands for damping. This means how much of its velocity is lost, gradually, or through collisions. The standard value of `-1` is a special value and uses the standard physics engine value. If you give the ball an angular velocity and set its damping to `0`, it will hardly ever stop turning, even when it rolls into something.
+
+### Interaction
+
+This of course is all fun, but before it becomes a real game you need some form of interaction. Therefore, we must write some code. Luckily, the code to make this into a fun _sandbox_ is very simple.
+
+Open the `objects/ball.tscn`. Click the `RigidBody2D`, click `Attach script` button and click `Create`. Then select everything and replace it with this piece of code:
+
+```gdscript
+extends RigidBody2D
+
+export var elastic_strength = 10;
+
+func _physics_process(delta):
+    # If the user holds down the left mouse button
+    if (Input.is_mouse_button_pressed(BUTTON_LEFT)):
+        # Apply elastic band towards the current mouse position
+        self.applied_force = (get_global_mouse_position() - self.position) * elastic_strength;
+    else:
+        # Remove elastic band
+        self.applied_force = Vector2(0,0)
+```
+
+Now go back to the 2D view of the level. _Run Scene_ and hold down the left mouse button. If everything went well, all balls in the level should gravitate towards your mouse cursor, as long as you hold the button down. The further they are from your mouse, the more they are attracted, as if connected by a rubber band.
+
+One interesting thing is that in the code above, we `export` the `var elastic_strength`. This means that you can edit it in the editor, just as we could with the other physics values.
+
+If you did not already have multiple balls in the level, add one. Then change on of the balls' `elastic_strength` to `5`. _Play Scene_ once more, and see how they behave.

@@ -27,43 +27,47 @@ __meta__ = {
 }
 
 [node name="RigidBody2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 512, 544 )
+position = Vector2( 752, 544 )
 
 [node name="RigidBody2D2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 544, 496 )
+position = Vector2( 784, 496 )
 
 [node name="RigidBody2D3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 576, 544 )
+position = Vector2( 816, 544 )
 
 [node name="RigidBody2D4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 640, 544 )
+position = Vector2( 880, 544 )
 
 [node name="RigidBody2D5" parent="." instance=ExtResource( 4 )]
-position = Vector2( 608, 496 )
+position = Vector2( 848, 496 )
 
 [node name="RigidBody2D6" parent="." instance=ExtResource( 2 )]
-position = Vector2( 544, 448 )
+position = Vector2( 784, 448 )
 
 [node name="RigidBody2D7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 608, 448 )
+position = Vector2( 848, 448 )
 
 [node name="RigidBody2D8" parent="." instance=ExtResource( 4 )]
-position = Vector2( 576, 400 )
+position = Vector2( 816, 400 )
 
 [node name="RigidBody2D9" parent="." instance=ExtResource( 3 )]
-position = Vector2( 496, 496 )
+position = Vector2( 736, 496 )
 
 [node name="RigidBody2D10" parent="." instance=ExtResource( 3 )]
-position = Vector2( 656, 496 )
+position = Vector2( 896, 496 )
 
 [node name="RigidBody2D11" parent="." instance=ExtResource( 3 )]
-position = Vector2( 624, 400 )
+position = Vector2( 864, 400 )
 
 [node name="RigidBody2D12" parent="." instance=ExtResource( 3 )]
-position = Vector2( 528, 400 )
+position = Vector2( 768, 400 )
 
 [node name="RigidBody2D13" parent="." instance=ExtResource( 2 )]
-position = Vector2( 576, 352 )
+position = Vector2( 816, 352 )
 
 [node name="RigidBody2D14" parent="." instance=ExtResource( 1 )]
-position = Vector2( 512, 256 )
+position = Vector2( 416, 544 )
+elastic_strength = 5
+
+[node name="RigidBody2D15" parent="." instance=ExtResource( 1 )]
+position = Vector2( 288, 448 )
