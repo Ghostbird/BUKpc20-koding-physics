@@ -1,3 +1,69 @@
-[gd_scene format=2]
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/block-vertical.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/block-square.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/block-horizontal.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 1056, 32 )
 
 [node name="World" type="Node2D"]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+position = Vector2( 0, 608 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+shape = SubResource( 1 )
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+margin_left = -32.0
+margin_top = -32.0
+margin_right = 1056.0
+margin_bottom = 32.0
+color = Color( 1, 0.564706, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RigidBody2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( 512, 544 )
+
+[node name="RigidBody2D2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 544, 496 )
+
+[node name="RigidBody2D3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 576, 544 )
+
+[node name="RigidBody2D4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 640, 544 )
+
+[node name="RigidBody2D5" parent="." instance=ExtResource( 4 )]
+position = Vector2( 608, 496 )
+
+[node name="RigidBody2D6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 544, 448 )
+
+[node name="RigidBody2D7" parent="." instance=ExtResource( 2 )]
+position = Vector2( 608, 448 )
+
+[node name="RigidBody2D8" parent="." instance=ExtResource( 4 )]
+position = Vector2( 576, 400 )
+
+[node name="RigidBody2D9" parent="." instance=ExtResource( 3 )]
+position = Vector2( 496, 496 )
+
+[node name="RigidBody2D10" parent="." instance=ExtResource( 3 )]
+position = Vector2( 656, 496 )
+
+[node name="RigidBody2D11" parent="." instance=ExtResource( 3 )]
+position = Vector2( 624, 400 )
+
+[node name="RigidBody2D12" parent="." instance=ExtResource( 3 )]
+position = Vector2( 528, 400 )
+
+[node name="RigidBody2D13" parent="." instance=ExtResource( 2 )]
+position = Vector2( 576, 352 )
+
+[node name="RigidBody2D14" parent="." instance=ExtResource( 1 )]
+position = Vector2( 512, 256 )

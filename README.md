@@ -47,3 +47,36 @@ Click the `RigidBody2D` in the _Scene_ tab. Add a child node. Select `CollisionS
 Now you don't need to see the collision area any more, so in the _Scene_ tab, click the icon after `CollisionShape2D` to hide the blue overlay.
 
 Finally save this file in the _objects_ folder as _ball.tscn_.
+
+## The first level
+
+Now that you have prepared the necessary objects, you can build a first level just to play around in.
+
+Open _levels/001.tscn_ in the _FileSystem_ tab. This is a level with just one base `Node2D` that has been named `World`.
+
+From the _Filesystem_ tab _objects_ folder, drag a couple of blocks and balls into the 2D view. Remember to place them within the thin blue outline that shows the _camera viewport_. Otherwise they will be off-screen.
+
+Now click _Play Scene_ in the top right part of the window, or press <kbd>F6</kbd> to start the current level.
+
+If everything went alright, you'll see the placed objects drop out of view. This shows that gravity works.
+
+Of course, this is rather boring.
+
+### Static body physics
+
+Since you want something to build on, you need to learn a second type of physics engine body. The static body has the same collision behaviour as the rigid body, but it cannot move. This is the ideal type of object to use for the fixed parts of your world.
+
+Click the `World` in the _Scene_ tab and add a `StaticBody2D`.  Rename this `StaticBody2D` to `Ground` just to easily identify it.
+Drag the `Ground` down to the bottom of the camera viewport. It doesn't matter that it won't exactly snap to that line.
+
+Add a `CollisionShape2D` to the `Ground`. Then in the _Inspector_ tab, click the _Shape_ `[empty]` and select _New RectangleShape2D_. Grab a corner the blue square that has appeared in the view and drag to widen it so that the rectangle covers at least the bottom of the camera viewport.
+
+Now press _Play Scene_ again and see what happens. If everything went well, the falling objects should have stopped just above the bottom of the screen.
+
+However, it is a bit weird that the ground is essentially invisible. To remedy that, click the `Ground` in the _Scene_ tab and add a `ColorRect`. It should appear as a white square below the ground line in the 2D view. Move and resize it so it covers the blue rectangle that indicates the collision shape. For some added flair, click the _Color_ property in the _Inspector_ tab and pick a colour of your choice.
+
+When you now _Play Scene_ again, you should see your rigid bodies fall down onto the coloured ground.
+
+### Building time
+
+Drag objects into the 2D view and build something by stacking them. You should enable _smart snapping_ to allow the blocks to snap correctly to the half-way points in the grid. Pay attention that when have placed a block, you click the background to deselect it before you drag the next object in. Otherwise you might attach objects to each other, and that can give unexpected behaviour.
