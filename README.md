@@ -125,3 +125,87 @@ Now go back to the 2D view of the level. _Run Scene_ and hold down the left mous
 One interesting thing is that in the code above, we `export` the `var elastic_strength`. This means that you can edit it in the editor, just as we could with the other physics values.
 
 If you did not already have multiple balls in the level, add one. Then change on of the balls' `elastic_strength` to `5`. _Play Scene_ once more, and see how they behave.
+
+## Goals
+
+Now that you have a sandbox game, you might want to add a way to win a level. To do that we're going to program a simple requirement.
+
+Click _Scene_, _New Scene_ and select `2D Scene` as root node. Rename the `Node2D` to `Base`. Then save this scene in a new folder _requirements_ and name it _base.tscn_.
+
+![filesystem structure after the save](docs/03-requirement-base.png)
+
+Now, click the button to attach a script, then click `Create`. Replace the contents of the script with:
+
+```gdscript
+extends Node2D
+
+export(String) var next_level;
+
+var passed = false;
+
+func _process(delta):
+    # Requirements passed and there is a next level
+    if (passed and next_level != null):
+        # Go to the next level
+        get_tree().change_scene("res://levels/" + next_level + ".tscn")
+```
+
+Congratulations, you have just created an impossible requirement. You'll never pass this requirement. And therefore you'll never reach the next level. It might seem kind of stupid, but we will use this as the base for more complex requirements.
+
+### A real requirement
+
+Click _Scene_, _New Scene_ and select `2D Scene` as root node. Rename the `Node2D` to `OffScreen`. Then save this scene in a new folder _requirements_ and name it _off-screen.tscn_.
+
+Click the `OffScreen` and attach a new script. Now in the window, don't click `Create` right away. Instead click the folder icon after _Inherits:_ `Node2D`.  Then select _requirements/base.tscn_. The _Inherits:_ should now be `"res://requirements/base.gd"`. Click `Create`. Remove everything below the first line of the script. It should look like this:
+
+```gdscript
+extends "res://requirements/base.gd"
+```
+
+This script now has all the functionality of the `Base` requirement, even though you don't see it.
+
+Click the `OffScreen` in the _Scene_ tab, and attach a new child node. Select `VisibilityNotifier2D`.
+
+Click the `VisibilityNotifier2D` in the _Scene_ tab and now look to the right side of the window. Besides the _Inspector_ tab, there is the _Node_ tab.
+
+Click the _Node_ tab. Now _double_-click `screen_exited()`. Then click `Connect`. You're now back in the script of the `OffScreen` but a few lines have been added. It should look like this:
+
+```gdscript
+extends "res://requirements/base.gd"
+
+func _on_VisibilityNotifier2D_screen_exited():
+    pass # Replace with function body.
+```
+
+The function `_on_VisibilityNotifier2D_screen_exited` is only activated when this object leaves the screen. That is exactly what you want as a requirement.
+
+Change the code to make the requirement `passed` once the object leaves the screen. Do not be confused by the word `pass` that is already here. That has _nothing_ to do with The final code should look like this:
+
+```gdscript
+extends "res://requirements/base.gd"
+
+func _on_VisibilityNotifier2D_screen_exited():
+    passed = true
+```
+
+This way you've made a real requirement that should be moved off-screen before it passes. Before we can do that though, we need one more thing. That is a second level to go to.
+
+Create a _New Scene_, choose `Node2D` as root node, and save it in _levels_ as _002.tscn_. Leave it empty for now.
+
+Now go back to level _001_. Choose a block in your building and click it. You should see it selected in the _Scene_ tab. Now from the _FileSystem_ tab drag the _off-screen.tscn_ and drop it on the selected block.
+
+Click the added `OffScreen`, then click the _Inspector_ tab. At the top you should see: _Next Level_. Click the field and enter `001`. That is the filename of the level without _.tscn_.
+
+Now run the game and see what happens when you knock this chosen block off-screen. As soon as it flies off screen, you'll see the empty screen of level 2. Now you can build level 2, and add another block there that must be knocked off screen.
+
+There are many possibilities now:
+
+- You are not limited to one requirement.
+- Not every requirement has to go to the same level.
+- You could add walls to level 2, so it is harder to knock the target block off screen.
+- You could create an object that has the level itself as _Next Level_ value. If that block leaves the screen, you've failed and the level resets.
+- You could set the _Elastic Strength_value of a ball to a negative value, so you push it instead of pulling it.
+- You can even use this to create a sort of main menu for the game! Which block you knock away determines to which level you go.
+- You can create new _requirements_ scenes with different logic to set the passed value.
+
+Have fun!
